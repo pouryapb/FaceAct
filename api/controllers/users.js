@@ -42,6 +42,12 @@ exports.signup = (req, res, next) => {
           }
         });
       }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        error: err,
+      });
     });
 };
 
@@ -219,6 +225,11 @@ exports.send_request = (req, res, next) => {
             error: err,
           });
         });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        error: err,
+      });
     });
 };
 

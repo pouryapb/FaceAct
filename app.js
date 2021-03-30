@@ -1,3 +1,5 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
@@ -6,20 +8,19 @@ const mongoose = require("mongoose");
 const usersRoute = require("./api/routes/users");
 const postsRoute = require("./api/routes/posts");
 
+mongoose.Promise = global.Promise;
+
 mongoose.connect(
   "mongodb+srv://faceact-db-user:" +
     process.env.DB_PASSWORD +
-    "@faceact.7q239.mongodb.net/" +
+    "@cluster0.7q239.mongodb.net/" +
     process.env.DB_NAME +
     "?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true,
   }
 );
-console.log(process.env.DB_PASSWORD);
-mongoose.Promise = global.Promise;
 
 app.use(morgan("dev"));
 
