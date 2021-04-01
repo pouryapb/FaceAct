@@ -1,4 +1,4 @@
-require("dotenv").config();
+process.env.NODE_ENV === "dev" && require("dotenv").config();
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
