@@ -1,0 +1,20 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+v: 0
+micros:
+  - name: FaceAct-backend
+    src: ./
+    engine: nodejs16
+    primary: true
+    presets:
+      env:
+        - name: DB_NAME
+          description: Database name
+          default: myFirstDatabase
+        - name: DB_PASSWORD
+          description: Database password
+        - name: JWT_KEY
+          description: jwt key
+    commands:
+      - mkdir uploads
+    run: node server.js
+    dev: npm run dev
