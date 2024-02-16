@@ -1,10 +1,9 @@
 # Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
 v: 0
 micros:
-  - name: FaceAct-backend
+  - name: backend
     src: ./
     engine: nodejs16
-    primary: true
     presets:
       env:
         - name: DB_NAME
@@ -17,4 +16,14 @@ micros:
     commands:
       - mkdir uploads
     run: node server.js
-    dev: npm run dev
+    path: api
+    dev: npm start
+
+  - name: frontend
+    primary: true
+    src: ./frontend
+    engine: static
+    commands:
+      - npm run build
+    serve: build
+    dev: npm start

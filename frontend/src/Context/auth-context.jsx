@@ -7,7 +7,7 @@ const cookies = new Cookies();
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState(null);
-  const [ip] = useState("https://face-act-backend.herokuapp.com");
+  const [ip] = useState("/api");
 
   const localToken = cookies.get("token");
   const localId = cookies.get("userId");
