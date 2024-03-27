@@ -54,10 +54,10 @@ exports.get_profile_posts = (req, res, next) => {
 
 exports.post = (req, res, next) => {
   const post = new Post({
-    _id: mongoose.Types.ObjectId(),
+    _id: new mongoose.Types.ObjectId(),
     username: req.body.username,
     text: req.body.text,
-    media: req.file ? req.file.path : null,
+    media: req.file ? "uploads/" + req.file.originalname : null,
     mediatype: req.file ? req.file.mimetype.split("/")[0] : null,
     date: new Date(),
   });

@@ -189,7 +189,10 @@ exports.patch_avatar = (req, res, next) => {
       message: "auth failed",
     });
   }
-  User.updateOne({ username: username }, { $set: { avatar: req.file.path } })
+  User.updateOne(
+    { username: username },
+    { $set: { avatar: "uploads/" + req.file.originalname } }
+  )
     .exec()
     .then((result) => {
       res.status(201).json(result);

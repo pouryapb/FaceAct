@@ -3,20 +3,14 @@ const router = express.Router();
 const multer = require("multer");
 
 const checkAuth = require("../middleware/check-auth");
+const driveUpload = require("../middleware/drive-upload");
 const usersControlers = require("../controllers/users");
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./uploads");
-  },
-  filename: function (req, file, cb) {
-    cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
-  },
-});
+const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
   const type = file.mimetype.split("/")[0];
-  if (type === "image" || type === "video") {
+  if (type === "image") {
     cb(null, true);
   } else {
     cb(null, false);
@@ -51,6 +45,7 @@ router.patch(
   "/avatarup/:username",
   checkAuth,
   upload.single("avatarImg"),
+  driveUpload,
   usersControlers.patch_avatar
 );
 

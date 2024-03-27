@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const { Deta } = require("deta");
 
 const usersRoute = require("./api/routes/users");
 const postsRoute = require("./api/routes/posts");
@@ -14,13 +15,11 @@ mongoose.connect(
     process.env.DB_PASSWORD +
     "@cluster0.7q239.mongodb.net/" +
     process.env.DB_NAME +
-    "?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  }
+    "?retryWrites=true&w=majority"
 );
+
+const deta = Deta();
+const drive = deta.Drive("uploads");
 
 app.use(morgan("dev"));
 
@@ -40,7 +39,10 @@ app.use((req, res, next) => {
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use("/uploads/", express.static("uploads"));
+app.use("/uploads/", async (req, res) => {
+  const data = await drive.get(req.path.substring(1));
+  return res.status(200).send(Buffer.from(await data.arrayBuffer()));
+});
 
 // Routes handling
 app.use("/", usersRoute);
