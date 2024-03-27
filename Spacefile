@@ -2,6 +2,7 @@
 v: 0
 micros:
   - name: backend
+    public: true
     src: ./
     engine: nodejs16
     presets:
@@ -20,6 +21,7 @@ micros:
     dev: npm start
 
   - name: frontend
+    public: true
     primary: true
     src: ./frontend
     engine: static
